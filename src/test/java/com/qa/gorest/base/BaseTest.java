@@ -18,6 +18,8 @@ public class BaseTest {
 	protected ConfigurationManager config;
 	protected Properties prop;
 	protected RestClient restClient;
+	protected String baseURI;
+	
 	
 	@Parameters({"baseURI"})
 	@BeforeTest
@@ -25,8 +27,9 @@ public class BaseTest {
 		RestAssured.filters(new AllureRestAssured());//allure report
 		config= new ConfigurationManager();
 		prop=config.initProp();
-		//String baseURI=prop.getProperty("baseURI");
-		restClient= new RestClient(prop, baseURI);
+		this.baseURI=baseURI;
+		//restClient= new RestClient(prop, baseURI);
+		System.out.println(baseURI);
 
 	}
 

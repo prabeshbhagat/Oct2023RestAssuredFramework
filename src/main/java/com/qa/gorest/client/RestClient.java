@@ -1,7 +1,11 @@
 package com.qa.gorest.client;
 
+import static io.restassured.RestAssured.given;
+
 import java.util.Map;
 import java.util.Properties;
+
+import org.testng.annotations.BeforeMethod;
 
 import com.fasterxml.jackson.databind.annotation.JsonAppend.Prop;
 import com.qa.gorest.frameworkException.ApiFrameworkException;
@@ -15,6 +19,7 @@ import io.restassured.specification.RequestSpecification;
 public class RestClient{
 
 	private static RequestSpecBuilder specBuilder;
+	private boolean isAuthorizationHeaderAdded=false;
 	
 	/*
 	 * used in s1 ,comment in s2
@@ -43,8 +48,12 @@ public class RestClient{
 	
 	
 	private  void addAuthrizationHeader() {
-		//bareare token code added in s2
-		specBuilder.addHeader("Authorization", "Bearer " +prop.getProperty("tokenId"));
+		//bearer token code added in s2
+		if(!isAuthorizationHeaderAdded) {
+			specBuilder.addHeader("Authorization", "Bearer " +prop.getProperty("tokenId"));
+			isAuthorizationHeaderAdded=true;
+		}
+		
 	}
 
 	
@@ -86,14 +95,14 @@ public class RestClient{
 		return specBuilder.build();
 	}
 
-	private RequestSpecification createRequestSpec(Map<String, String> headersMap, Map<String, String> querParamsMap,boolean includeAuth) {
+	private RequestSpecification createRequestSpec(Map<String, String> headersMap, Map<String, Object> queryParamsMap,boolean includeAuth) {
 		specBuilder.setBaseUri(baseURI);
 		if(includeAuth) {addAuthrizationHeader();}
 		if (headersMap != null) {
 			specBuilder.addHeaders(headersMap);
 		}
-		if (querParamsMap != null) {
-			specBuilder.addQueryParams(querParamsMap);
+		if (queryParamsMap != null) {
+			specBuilder.addQueryParams(queryParamsMap);
 		}
 		return specBuilder.build();
 
@@ -147,7 +156,7 @@ public class RestClient{
 			get(serviceUrl);
 	}
 	
-	public Response get(String serviceUrl,Map<String,String> headersMap,Map<String, String> queryParamsMap,
+	public Response get(String serviceUrl,Map<String,String> headersMap,Map<String, Object> queryParamsMap,
 			boolean includeAuth,boolean log) {
 		if (log) {
 			 return RestAssured.given(createRequestSpec(headersMap, queryParamsMap,includeAuth)).log().all()
@@ -222,6 +231,31 @@ public class RestClient{
 			RestAssured.given(createRequestSpec(includeAuth))
 			.when()
 			.delete(serviceUrl);
+		}
+		
+		
+		//OAuth 2 Generate token
+		public String getAccessToken(String serviceUrl,String grantType,String clientId,String clientSecret) {
+			
+
+			RestAssured.baseURI="https://test.api.amadeus.com";
+			
+			 String token_id=given().log().all()
+					.contentType(ContentType.URLENC)
+					.formParam("grant_type", grantType)
+					.formParam("client_id", clientId)
+					.formParam("client_secret", clientSecret)
+				.when().log().all()
+					.post(serviceUrl)
+				.then()
+					.assertThat()
+						.statusCode(200)
+					.extract()
+						.path("access_token");
+				
+				System.out.println("token_id="+token_id);
+				return token_id;
+			
 		}
 		
 
