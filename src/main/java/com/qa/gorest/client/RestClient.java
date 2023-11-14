@@ -8,6 +8,7 @@ import java.util.Properties;
 import org.testng.annotations.BeforeMethod;
 
 import com.fasterxml.jackson.databind.annotation.JsonAppend.Prop;
+import com.qa.gorest.constants.APIHttpStatus;
 import com.qa.gorest.frameworkException.ApiFrameworkException;
 
 import io.restassured.RestAssured;
@@ -249,7 +250,7 @@ public class RestClient{
 					.post(serviceUrl)
 				.then()
 					.assertThat()
-						.statusCode(200)
+						.statusCode(APIHttpStatus.OK_200.getCode())
 					.extract()
 						.path("access_token");
 				

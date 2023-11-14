@@ -1,6 +1,6 @@
 package com.qa.gorest.tests;
 
-import static io.restassured.RestAssured.given;
+
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,9 +10,8 @@ import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import com.qa.gorest.base.BaseTest;
 import com.qa.gorest.client.RestClient;
+import com.qa.gorest.constants.APIHttpStatus;
 
-
-import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
@@ -24,8 +23,8 @@ public class AmadeusAPITest extends BaseTest{
 	@BeforeMethod
 	public void flightSetUp(String baseURI,String grantType,String clientId,String clientSecret) {
 		RestClient restClient= new RestClient(prop, baseURI);
-		accessToken=restClient.getAccessToken("v1/security/oauth2/token", grantType, clientId, clientSecret);
-		System.out.println("Generated Access toke"+accessToken);
+		accessToken=restClient.getAccessToken(ACCESS_TOKEN_ENDPOINT, grantType, clientId, clientSecret);
+		System.out.println("Generated Access token"+accessToken);
 	}
 	
 	
@@ -40,10 +39,10 @@ public class AmadeusAPITest extends BaseTest{
 		queryParamMap.put("origin", "PAR");
 		queryParamMap.put("maxPrice", "200");
 		
-		Response flisghtDataresponse= restClient.get("/v1/shopping/flight-destinations", headersMap, queryParamMap, false, true)
+		Response flisghtDataresponse= restClient.get(FLIGHTBOOKING_ENDPOINT, headersMap, queryParamMap, false, true)
 		.then().log().all()
 		.assertThat()
-			.statusCode(200)
+			.statusCode(APIHttpStatus.OK_200.getCode())
 			.and()
 			.extract().response();
 	

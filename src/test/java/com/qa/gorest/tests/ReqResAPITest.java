@@ -5,6 +5,7 @@ import org.testng.annotations.Test;
 
 import com.qa.gorest.base.BaseTest;
 import com.qa.gorest.client.RestClient;
+import com.qa.gorest.constants.APIHttpStatus;
 
 public class ReqResAPITest extends BaseTest {
 	
@@ -15,10 +16,10 @@ public class ReqResAPITest extends BaseTest {
 	
 	@Test
 	public void ReqResgetAllUsersTest() {
-		restClient.get("/api/users?page=2",false, true)
+		restClient.get(REQRES_ENDPOINT+"?page=2",false, true)
 				.then()
 				.assertThat().log().all()
-				.statusCode(200);	
+				.statusCode(APIHttpStatus.OK_200.getCode());	
 	}
 	
 

@@ -13,8 +13,18 @@ import io.restassured.RestAssured;
 
 public class BaseTest {
 	
-	//s2
+	//s3
+	public static final String GOREST_ENDPOINT="/public/v2/users";
+	public static final String REQRES_ENDPOINT="/api/users";
+	public static final String CIRCUIT_ENDPOINT="/api/f1";
+	public static final String ACCESS_TOKEN_ENDPOINT="v1/security/oauth2/token";
+	public static final String FLIGHTBOOKING_ENDPOINT="/v1/shopping/flight-destinations";
+	public static final String FAKESTOREAPI_ENDPOINT="/products";
 	
+	
+	
+	
+	//s2
 	protected ConfigurationManager config;
 	protected Properties prop;
 	protected RestClient restClient;
