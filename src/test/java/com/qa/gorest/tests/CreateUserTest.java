@@ -3,6 +3,7 @@ package com.qa.gorest.tests;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
 import static org.hamcrest.Matchers.*;
 
 import com.qa.gorest.base.BaseTest;
@@ -78,5 +79,8 @@ public class CreateUserTest extends BaseTest {
 				.statusCode(APIHttpStatus.OK_200.getCode()).and().body("id", equalTo(user_id));
 
 	}
+	
+	
+	
 
 }

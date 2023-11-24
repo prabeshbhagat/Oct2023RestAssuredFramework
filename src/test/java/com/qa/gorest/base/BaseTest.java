@@ -22,8 +22,6 @@ public class BaseTest {
 	public static final String FAKESTOREAPI_ENDPOINT="/products";
 	
 	
-	
-	
 	//s2
 	protected ConfigurationManager config;
 	protected Properties prop;

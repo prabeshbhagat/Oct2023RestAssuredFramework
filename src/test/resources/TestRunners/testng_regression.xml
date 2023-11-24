@@ -9,7 +9,7 @@
 			class-name="com.qa.gorest.listeners.ExtentReportListener" />
 	</listeners>
 	
-	<!--test name="Fakestore API Create Products Test">
+	<test name="Fakestore API Create Products Test">
 		<parameter name="baseURI" value="https://fakestoreapi.com" />
 
 		<classes>
@@ -48,7 +48,7 @@
 			<class name="com.qa.gorest.tests.GetUserTest" />
 		</classes>
 
-	</test>-->
+	</test>
 	
 	
 	<test name="Go Rest API Create user Test">
@@ -60,7 +60,7 @@
 
 	</test>
 	
-	<!--test name="Cicuit API Test">
+	<test name="Cicuit API Test">
 		<parameter name="baseURI" value="https://ergast.com/" />
 
 		<classes>
@@ -76,7 +76,7 @@
 			<class name="com.qa.gorest.tests.ReqResAPITest" />
 		</classes>
 
-	</test>-->
+	</test>
 
 </suite>
 
