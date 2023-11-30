@@ -5,9 +5,7 @@ import static io.restassured.RestAssured.given;
 import java.util.Map;
 import java.util.Properties;
 
-import org.testng.annotations.BeforeMethod;
 
-import com.fasterxml.jackson.databind.annotation.JsonAppend.Prop;
 import com.qa.gorest.constants.APIHttpStatus;
 import com.qa.gorest.frameworkException.ApiFrameworkException;
 
@@ -152,7 +150,7 @@ public class RestClient{
 			.when().
 				get(serviceUrl);
 		}
-		return RestAssured.given(createRequestSpec(headersMap,includeAuth)).log().all()
+		return RestAssured.given(createRequestSpec(headersMap,includeAuth))
 		.when().
 			get(serviceUrl);
 	}
@@ -164,7 +162,7 @@ public class RestClient{
 			.when().
 				get(serviceUrl);
 		}
-		return RestAssured.given(createRequestSpec(headersMap, queryParamsMap,includeAuth)).log().all()
+		return RestAssured.given(createRequestSpec(headersMap, queryParamsMap,includeAuth))
 		.when().
 			get(serviceUrl);
 	}
