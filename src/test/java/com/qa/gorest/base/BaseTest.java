@@ -32,12 +32,15 @@ public class BaseTest {
 	@Parameters({"baseURI"})
 	@BeforeTest
 	public void setUp(String baseURI ) {
+		
 		RestAssured.filters(new AllureRestAssured());//allure report
+		
 		config= new ConfigurationManager();
 		prop=config.initProp();
 		this.baseURI=baseURI;
 		//restClient= new RestClient(prop, baseURI);
 		System.out.println(baseURI);
+		
 
 	}
 
